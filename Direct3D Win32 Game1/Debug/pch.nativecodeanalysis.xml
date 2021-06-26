@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>W:\Programs\CG_Lab\Direct3D Win32 Game1\packages\directxtk_desktop_2017.2021.6.10.1\include\</FILEPATH>
+      <FILENAME>GamePad.h</FILENAME>
+      <LINE>196</LINE>
+      <COLUMN>67</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>Тип перечисления "DirectX::GamePad::Capabilities::Type" не входит в область. Старайтесь использовать "enum class" вместо "enum" (Enum.3).</DESCRIPTION>
+    <FUNCTION>DirectX::GamePad::Capabilities::{ctor}</FUNCTION>
+    <DECORATED>??0Capabilities@GamePad@DirectX@@QAE@XZ</DECORATED>
+    <FUNCLINE>196</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>W:\Programs\CG_Lab\Direct3D Win32 Game1\packages\directxtk_desktop_2017.2021.6.10.1\include\</FILEPATH>
+      <FILENAME>Keyboard.h</FILENAME>
+      <LINE>407</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>Тип перечисления "DirectX::Keyboard::Keys" не входит в область. Старайтесь использовать "enum class" вместо "enum" (Enum.3).</DESCRIPTION>
+    <FUNCTION>DirectX::Keyboard::State::IsKeyDown</FUNCTION>
+    <DECORATED>?IsKeyDown@State@Keyboard@DirectX@@QBA_NW4Keys@23@@Z</DECORATED>
+    <FUNCLINE>407</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>W:\Programs\CG_Lab\Direct3D Win32 Game1\packages\directxtk_desktop_2017.2021.6.10.1\include\</FILEPATH>
+      <FILENAME>Model.h</FILENAME>
+      <LINE>217</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>Тип перечисления "DirectX::ModelLoaderFlags" не входит в область. Старайтесь использовать "enum class" вместо "enum" (Enum.3).</DESCRIPTION>
+    <FUNCTION>DirectX::|</FUNCTION>
+    <DECORATED>??UDirectX@@YA?AW4ModelLoaderFlags@0@W410@0@Z</DECORATED>
+    <FUNCLINE>217</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>W:\Programs\CG_Lab\Direct3D Win32 Game1\packages\directxtk_desktop_2017.2021.6.10.1\include\</FILEPATH>
+      <FILENAME>WICTextureLoader.h</FILENAME>
+      <LINE>164</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>Тип перечисления "DirectX::WIC_LOADER_FLAGS" не входит в область. Старайтесь использовать "enum class" вместо "enum" (Enum.3).</DESCRIPTION>
+    <FUNCTION>DirectX::|</FUNCTION>
+    <DECORATED>??UDirectX@@YA?AW4WIC_LOADER_FLAGS@0@W410@0@Z</DECORATED>
+    <FUNCLINE>164</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

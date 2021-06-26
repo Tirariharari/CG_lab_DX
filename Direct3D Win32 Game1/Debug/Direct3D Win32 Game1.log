@@ -1,0 +1,5 @@
+﻿  Game.cpp
+W:\Programs\CG_Lab\Direct3D Win32 Game1\Direct3D Win32 Game1\Game.cpp(60,11): warning C4189: 'time': local variable is initialized but not referenced
+  Main.cpp
+  Generating Code...
+  Direct3D Win32 Game1.vcxproj -> W:\Programs\CG_Lab\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.exe
