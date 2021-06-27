@@ -1,15 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <ProjectOutputs>
-    <ProjectOutput>
-      <FullPath>C:\Users\Lenzy\source\repos\Direct3D Win32 Game\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.exe</FullPath>
-    </ProjectOutput>
-  </ProjectOutputs>
-  <ContentFiles>
-    <ContentFile>
-      <FullPath>C:\Users\Lenzy\source\repos\Direct3D Win32 Game\Direct3D Win32 Game1\Debug\shader.cso</FullPath>
-    </ContentFile>
-  </ContentFiles>
-  <SatelliteDlls />
-  <NonRecipeFileRefs />
+  <ProjectOutputs>W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\Direct3D Win32 Game1.exe</ProjectOutputs>
+  <ContentFiles>W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\shader.cso</ContentFiles>
+  <SatelliteDlls></SatelliteDlls>
+  <NonRecipeFileRefs></NonRecipeFileRefs>
 </Project>

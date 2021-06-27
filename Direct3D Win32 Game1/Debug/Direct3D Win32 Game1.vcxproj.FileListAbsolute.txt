@@ -1,3 +1,5 @@
 C:\Users\Lenzy\source\repos\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
-W:\Programs\CG_Lab\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
-C:\Users\Lenzy\source\repos\Direct3D Win32 Game\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
+W:\Programs\CG_Lab\Lab\Direct3D Win32 Game1 (2)\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
+W:\Programs\CG_Lab\Lab\Direct3D Win32 Game1 (2)\Direct3D Win32 Game1\Debug\shader.cso
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\shader.cso
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete

@@ -1,7 +1,14 @@
 ﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
-W:\Downloads\Telegram\Direct3D Win32 Game1\Direct3D Win32 Game1\shader.fx(106,16-25): warning X3081: comma expression used where a vector constructor may have been intended
-W:\Downloads\Telegram\Direct3D Win32 Game1\Direct3D Win32 Game1\shader.fx(106,16-31): warning X3081: comma expression used where a vector constructor may have been intended
-W:\Downloads\Telegram\Direct3D Win32 Game1\Direct3D Win32 Game1\shader.fx(106,16-37): warning X3081: comma expression used where a vector constructor may have been intended
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Direct3D Win32 Game1\shader.fx(111,16-25): warning X3081: comma expression used where a vector constructor may have been intended
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Direct3D Win32 Game1\shader.fx(111,16-31): warning X3081: comma expression used where a vector constructor may have been intended
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Direct3D Win32 Game1\shader.fx(111,16-37): warning X3081: comma expression used where a vector constructor may have been intended
   
-  compilation object save succeeded; see W:\Downloads\Telegram\Direct3D Win32 Game1\Debug\shader.cso
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(422,9): error MSB4030: "Default" is an invalid value for the "ConformanceMode" parameter of the "CL" task. The "ConformanceMode" parameter is of type "System.Boolean".
+  compilation object save succeeded; see W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\shader.cso
+  pch.cpp
+  Game.cpp
+W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Direct3D Win32 Game1\Game.cpp(69,11): warning C4189: 'time': local variable is initialized but not referenced
+  GraphicModel.cpp
+  Main.cpp
+  Generating Code...
+     Creating library W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\Direct3D Win32 Game1.lib and object W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\Direct3D Win32 Game1.exp
+  Direct3D Win32 Game1.vcxproj -> W:\Programs\CG_Lab\Lab\CG_lab_DX\CG_lab_DX\Debug\Direct3D Win32 Game1.exe
