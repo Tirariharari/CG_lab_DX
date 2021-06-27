@@ -34,4 +34,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader.fx" />
+  </ItemGroup>
 </Project>

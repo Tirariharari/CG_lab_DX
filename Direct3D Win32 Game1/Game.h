@@ -71,7 +71,16 @@ private:
     DirectX::SimpleMath::Matrix                     m_view;
     DirectX::SimpleMath::Matrix                     m_proj;
     std::unique_ptr<DirectX::GeometricPrimitive>    m_shape;
-    std::unique_ptr<DirectX::BasicEffect>           m_effect;
+    //std::unique_ptr<DirectX::BasicEffect>           m_effect;
     Microsoft::WRL::ComPtr<ID3D11InputLayout>       m_inputLayout;
+
+    ID3D11Buffer*                                   m_constBuffer;
  
 };
+
+struct constData
+{
+    DirectX::SimpleMath::Matrix WorldVProj;
+    DirectX::SimpleMath::Matrix World;
+};
+

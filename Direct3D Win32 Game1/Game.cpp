@@ -5,6 +5,14 @@
 #include "pch.h"
 #include "Game.h"
 
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib")
+
+#include <d3d11.h>
+#include <d3dcompiler.h>
+
 
 extern void ExitGame() noexcept;
 
@@ -57,8 +65,8 @@ void Game::Update(DX::StepTimer const& timer)
     float elapsedTime = float(timer.GetElapsedSeconds());
 
     // TODO: Add your game logic here.
+
     float time = float(timer.GetTotalSeconds());
-    
 
     elapsedTime;
 }
@@ -66,6 +74,11 @@ void Game::Update(DX::StepTimer const& timer)
 // Draws the scene.
 void Game::Render()
 {
+
+    D3D11_MAPPED_SUBRESOURCE subresource = {};
+    constData data;
+
+
     // Don't try to render anything before the first Update.
     if (m_timer.GetFrameCount() == 0)
     {
@@ -76,7 +89,6 @@ void Game::Render()
 
     static float rotation = 0.0f;
 
-
     rotation += (float)XM_PI * 0.005f;
     if (rotation > 360.0f)
     {
@@ -85,57 +97,48 @@ void Game::Render()
 
     //float orbitRadius = 0.0f;
 
-    GraphicModel moonModel  (0.2f, m_shape.get(), m_effect.get());
+    /*GraphicModel moonModel  (0.2f, m_shape.get(), m_effect.get());
     GraphicModel earthModel (0.5f, m_shape.get(), m_effect.get());
     GraphicModel sunModel   (0.0f, m_shape.get(), m_effect.get());
-    GraphicModel marsModel  (1.3f, m_shape.get(), m_effect.get());
+    GraphicModel marsModel  (1.3f, m_shape.get(), m_effect.get());*/
+
+    GraphicModel moonModel(0.2f, m_shape.get());
+    GraphicModel earthModel(0.5f, m_shape.get());
+    GraphicModel sunModel(0.0f, m_shape.get());
+    GraphicModel marsModel(1.3f, m_shape.get());
 
     earthModel.SetParent(&sunModel);
     moonModel.SetParent(&earthModel);
     marsModel.SetParent(&sunModel);
 
-    sunModel.Update(rotation);
-    sunModel.Draw(m_inputLayout.Get());
+    m_d3dContext->VSSetConstantBuffers(0, 1, &m_constBuffer);
+    m_d3dContext->PSSetConstantBuffers(0, 1, &m_constBuffer);
+
+    m_world = sunModel.Update(rotation);
+    sunModel.Draw(m_view, m_proj);
+
+    m_world = earthModel.Update(rotation);
+    earthModel.Draw(m_view, m_proj);
+
+    m_world = moonModel.Update(rotation * 12.0f);
+    moonModel.Draw(m_view, m_proj);
+
+    m_world = marsModel.Update(-rotation / 2.0f);
+    /*marsModel.Draw(m_view, m_proj);*/
     
-    earthModel.Update(rotation);
-    earthModel.Draw(m_inputLayout.Get());
+    m_d3dContext->VSSetConstantBuffers(0, 1, &m_constBuffer);
 
-    moonModel.Update(rotation * 12.0f);
-    moonModel.Draw(m_inputLayout.Get());
-
-    marsModel.Update(rotation / 2.0f);
-    marsModel.Draw(m_inputLayout.Get());
-
+    data.WorldVProj = m_world * m_view * m_proj;
+    data.WorldVProj = data.WorldVProj.Transpose();
+    data.World = m_world;
     
-    //earthModel.SetParent(&sunModel);
-    //earthModel.Update(rotation);
-    //earthModel.Draw(m_inputLayout.Get());
+    m_d3dContext->Map(m_constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subresource);
 
-   // sunModel.Update(rotation);
-   // sunModel.Draw(m_inputLayout.Get());
+    memcpy(reinterpret_cast<float*>(subresource.pData), &data, sizeof(constData));
 
+    m_d3dContext->Unmap(m_constBuffer, 0);
 
-
-   /* XMVECTOR normalAxis = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
-    XMMATRIX mRot = XMMatrixRotationNormal(normalAxis, rotation);
-    XMMATRIX mTrans = XMMatrixTranslation(0.0f, 0.0f, 0.5f);
-    XMMATRIX mNew;
-
-    m_world = mTrans * mRot;
-
-
-    m_effect->SetWorld(m_world);
-    m_shape->Draw(m_effect.get(), m_inputLayout.Get());                        
-    
-    mTrans = XMMatrixTranslation(0.0f, 0.0f, 0.2f);
-    mNew = mTrans * mRot;
-
-    m_effect->SetWorld(XMMatrixMultiply(mNew, m_world));
-    m_shape->Draw(m_effect.get(), m_inputLayout.Get());             
-
-    m_world = Matrix::Identity;
-    m_effect->SetWorld(m_world);
-    m_shape->Draw(m_effect.get(), m_inputLayout.Get());*/
+    marsModel.Draw(m_view, m_proj);
 
     Present();
 }
@@ -239,6 +242,40 @@ void Game::CreateDevice()
     // Create the DX11 API device object, and get a corresponding context.
     ComPtr<ID3D11Device> device;
     ComPtr<ID3D11DeviceContext> context;
+
+    /*
+    ID3DBlob* vertexBC = nullptr;
+    ID3DBlob* errorVertexCode;
+    ID3DBlob* pixelBC = nullptr;
+    ID3DBlob* errorPixelCode;
+
+    //Compiling shader
+
+    DX::ThrowIfFailed(
+        D3DCompileFromFile(L"shader.fx",
+            nullptr,
+            nullptr,
+            "VSMain",
+            "vs_5_0",
+            NULL,//D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+            0,
+            &vertexBC,
+            &errorVertexCode)
+    );
+
+    DX::ThrowIfFailed(
+        D3DCompileFromFile(L"shader.fx",
+            nullptr,
+            nullptr,
+            "PSMain",
+            "ps_5_0",
+            NULL,//D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+            0,
+            &pixelBC,
+            &errorPixelCode)
+    );
+    */
+
     DX::ThrowIfFailed(D3D11CreateDevice(
         nullptr,                            // specify nullptr to use the default adapter
         D3D_DRIVER_TYPE_HARDWARE,
@@ -251,6 +288,10 @@ void Game::CreateDevice()
         &m_featureLevel,                    // returns feature level of device created
         context.ReleaseAndGetAddressOf()    // returns the device immediate context
         ));
+
+
+    DX::ThrowIfFailed(device.As(&m_d3dDevice));
+    DX::ThrowIfFailed(context.As(&m_d3dContext));
 
 #ifndef NDEBUG
     ComPtr<ID3D11Debug> d3dDebug;
@@ -276,28 +317,59 @@ void Game::CreateDevice()
     }
 #endif
 
-    DX::ThrowIfFailed(device.As(&m_d3dDevice));
-    DX::ThrowIfFailed(context.As(&m_d3dContext));
+    /*
+    D3D11_INPUT_ELEMENT_DESC inputElements[] = {
+        D3D11_INPUT_ELEMENT_DESC {"POSITION",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        D3D11_INPUT_ELEMENT_DESC {"COLOR",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
+
+
+    ID3D11VertexShader* vertexShader;
+    ID3D11PixelShader* pixelShader;
+
+    m_d3dDevice->CreateVertexShader(
+        vertexBC->GetBufferPointer(),
+        vertexBC->GetBufferSize(),
+        nullptr, &vertexShader);
+
+    m_d3dDevice->CreatePixelShader(
+        pixelBC->GetBufferPointer(),
+        pixelBC->GetBufferSize(),
+        nullptr, &pixelShader);
+
+
+    //ID3D11InputLayout* layout;
+
+    m_d3dDevice->CreateInputLayout(
+        inputElements,
+        2,
+        vertexBC->GetBufferPointer(),
+        vertexBC->GetBufferSize(),
+        &m_inputLayout);
+
+
+    m_d3dContext->VSSetShader(vertexShader, nullptr, 0);
+    m_d3dContext->PSSetShader(pixelShader, nullptr, 0);
+    */
 
     // TODO: Initialize device dependent objects here (independent of window size).
 
-    m_effect = std::make_unique<BasicEffect>(m_d3dDevice.Get());
-    m_effect->SetPerPixelLighting(true);
-    m_effect->SetLightingEnabled(true);
-    m_effect->SetLightEnabled(0, true);
-    m_effect->SetLightDiffuseColor(0, Colors::White);
-    m_effect->SetLightSpecularColor(0, Colors::Red);
-    m_effect->SetLightDirection(0, -Vector3::UnitZ);
+    //m_effect = std::make_unique<BasicEffect>(m_d3dDevice.Get());
+    //m_effect->SetPerPixelLighting(true);
+    //m_effect->SetLightingEnabled(true);
+    //m_effect->SetLightEnabled(0, true);
+    //m_effect->SetLightDiffuseColor(0, Colors::White);
+    //m_effect->SetLightSpecularColor(0, Colors::Red);
+    //m_effect->SetLightDirection(0, -Vector3::UnitZ);
 
     m_shape = GeometricPrimitive::CreateSphere(m_d3dContext.Get(), 0.15);
+    
 
-    m_shape->CreateInputLayout(m_effect.get(),
-        m_inputLayout.ReleaseAndGetAddressOf());
+    /*m_shape->CreateInputLayout(m_effect.get(),
+        m_inputLayout.ReleaseAndGetAddressOf());*/
 
     m_world = Matrix::Identity;
 
-    //float orbitRadius = 0.0f;
-    //GraphicModel sunModel(orbitRadius, m_shape.get(), m_effect.get());
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
@@ -399,8 +471,87 @@ void Game::CreateResources()
     m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,
         float(backBufferWidth) / float(backBufferHeight), 0.1f, 10.f);
 
-    m_effect->SetView(m_view);
-    m_effect->SetProjection(m_proj);
+    //---------------------
+    // Shaders
+    //---------------------
+    ID3DBlob* vertexBC = nullptr;
+    ID3DBlob* errorVertexCode;
+    ID3DBlob* pixelBC = nullptr;
+    ID3DBlob* errorPixelCode;
+
+    //Compiling shader
+
+    DX::ThrowIfFailed(
+        D3DCompileFromFile(L"shader.fx",
+            nullptr,
+            nullptr,
+            "VSMain",
+            "vs_5_0",
+            NULL,//D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+            0,
+            &vertexBC,
+            &errorVertexCode)
+    );
+
+    DX::ThrowIfFailed(
+        D3DCompileFromFile(L"shader.fx",
+            nullptr,
+            nullptr,
+            "PSMain",
+            "ps_5_0",
+            NULL,//D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
+            0,
+            &pixelBC,
+            &errorPixelCode)
+    );
+
+    D3D11_INPUT_ELEMENT_DESC inputElements[] = {
+        D3D11_INPUT_ELEMENT_DESC {"POSITION",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        D3D11_INPUT_ELEMENT_DESC {"COLOR",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
+
+
+    ID3D11VertexShader* vertexShader;
+    ID3D11PixelShader* pixelShader;
+
+    m_d3dDevice->CreateVertexShader(
+        vertexBC->GetBufferPointer(),
+        vertexBC->GetBufferSize(),
+        nullptr, &vertexShader);
+
+    m_d3dDevice->CreatePixelShader(
+        pixelBC->GetBufferPointer(),
+        pixelBC->GetBufferSize(),
+        nullptr, &pixelShader);
+
+
+    //ID3D11InputLayout* layout;
+
+    m_d3dDevice->CreateInputLayout(
+        inputElements,
+        2,
+        vertexBC->GetBufferPointer(),
+        vertexBC->GetBufferSize(),
+        &m_inputLayout);
+
+    D3D11_BUFFER_DESC constBufDesc = {};
+    constBufDesc.Usage = D3D11_USAGE_DYNAMIC;
+    constBufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    constBufDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    constBufDesc.MiscFlags = 0;
+    constBufDesc.StructureByteStride = 0;
+    constBufDesc.ByteWidth = sizeof(DirectX::SimpleMath::Matrix);
+    
+    m_d3dContext->VSSetShader(vertexShader, nullptr, 0);
+    m_d3dContext->PSSetShader(pixelShader, nullptr, 0);
+    
+    m_d3dDevice->CreateBuffer(&constBufDesc, nullptr, &m_constBuffer);
+
+    m_d3dContext->VSSetConstantBuffers(0, 1, &m_constBuffer);
+    //m_d3dContext->PSSetConstantBuffers(0, 1, &m_constBuffer);
+
+    //m_effect->SetView(m_view);
+    //m_effect->SetProjection(m_proj);
 }
 
 void Game::OnDeviceLost()
@@ -408,7 +559,7 @@ void Game::OnDeviceLost()
     // TODO: Add Direct3D resource cleanup here.
     m_shape.reset();
 
-    m_effect.reset();
+    //m_effect.reset();
     m_inputLayout.Reset();
 
     m_depthStencilView.Reset();

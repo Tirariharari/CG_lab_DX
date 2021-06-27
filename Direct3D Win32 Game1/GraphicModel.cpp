@@ -6,11 +6,17 @@
 
 using namespace DirectX;
 
-GraphicModel::GraphicModel(float p, GeometricPrimitive* m, BasicEffect* e)
+//GraphicModel::GraphicModel(float p, GeometricPrimitive* m, BasicEffect* e)
+//{
+//	orbitRadius = p;
+//	mesh = m;
+//	effect = e;
+//}
+
+GraphicModel::GraphicModel(float p, DirectX::GeometricPrimitive* m)
 {
 	orbitRadius = p;
 	mesh = m;
-	effect = e;
 }
 
 void GraphicModel::SetParent(GraphicModel* p)
@@ -18,7 +24,7 @@ void GraphicModel::SetParent(GraphicModel* p)
 	parent = p;
 }
 
-void GraphicModel::Update(float rotation)
+DirectX::XMMATRIX GraphicModel::Update(float rotation)
 {
 	
 
@@ -36,11 +42,19 @@ void GraphicModel::Update(float rotation)
 		mNew = SimpleMath::Matrix::Identity;
 	}
 
+	return mNew;
 
-	effect->SetWorld(mNew);
+
+	//effect->SetWorld(mNew);
 }
 
-void GraphicModel::Draw(ID3D11InputLayout* layout)
+//void GraphicModel::Draw(ID3D11InputLayout* layout, DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj)
+//{
+//	mesh->Draw(effect, layout);
+//	
+//}
+
+void GraphicModel::Draw(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj)
 {
-	mesh->Draw(effect, layout);
+	mesh->Draw(mNew, view, proj);
 }

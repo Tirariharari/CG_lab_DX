@@ -1,0 +1,3 @@
+C:\Users\Lenzy\source\repos\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
+W:\Programs\CG_Lab\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
+C:\Users\Lenzy\source\repos\Direct3D Win32 Game\Direct3D Win32 Game1\Direct3D Win32 Game1\Debug\Direct3D Win32 Game1.vcxproj.CopyComplete
