@@ -87,6 +87,11 @@
 //}
 //*/
 
+cbuffer VS_CONSTANT_BUFFER : register(b0)
+{
+	float4x4 mWorldViewProj;
+};
+
 struct VS_IN
 {
 	float4 pos : POSITION;
@@ -102,7 +107,7 @@ struct PS_IN
 PS_IN VSMain(VS_IN input)
 {
 	PS_IN output = (PS_IN)0;
-	output.pos = input.pos;//mul(float4(input.pos.xyz, 10.f), ConstData.WorldVievProj);
+	output.pos = mul(float4(input.pos.xyz, 10.f), mWorldViewProj);
 	output.col = (1.0f, 1.0f, 0.0f, 0.5f);// input.col;
 	return output;
 }
